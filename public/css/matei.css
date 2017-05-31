@@ -1,0 +1,42 @@
+<style>
+  body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  [class^=slider] { display: inline-block; margin-bottom: 30px; }
+  .output { color: #888; font-size: 14px; padding-top: 1px; margin-left: 5px; vertical-align: top;}
+  h1 { font-size: 20px; }
+  h2 { clear: both; margin: 0; margin-bottom: 5px; font-size: 16px; }
+  p { font-size: 15px; margin-bottom: 30px; }
+  h2:first-of-type { margin-top: 0; }
+  </style>
+<style type="text/css">
+	#contenu {
+		width:2000px;
+		height:2000px;
+		background-color:#FFCC00;
+	}
+
+
+	#canvas {
+		
+        }
+		#canvas2 {
+		
+        }
+		#centrage {
+    width: 600px;
+    height:20px;
+    margin: 0px auto;
+	
+}
+		#transparency {
+    width: 17em;  height: 2em;
+}
+		#regions {
+    width: 17em; 
+}
+#form { 
+margin: 0 auto; 
+width:600px;
+height:600px;
+}
+
+</style>

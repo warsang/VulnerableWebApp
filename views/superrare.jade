@@ -1,0 +1,168 @@
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : { }
+- maxfilesnr_message = typeof(messageAlert) != 'undefined' ? messageAlert : { }
+
+input(type='hidden', value= user._id)#userId
+html.
+	<head>
+	<!-- Bootstrap core CSS -->
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/vendor/bootstrap.min.css" rel="stylesheet">
+	<!-- Bootstrap theme -->
+	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="/css/predattor.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	</head>
+
+	<body role="document">
+	<p></p><br>
+	<div class="jumbotron" id="jumbobg">
+	<h2 id="jumbotitle">></h2>
+	</div>
+	
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container-fluid">
+	<div id="navbar" class="navbar-collapse collapse">
+	<ul class="nav navbar-nav">
+		<li><a href="/superrare"><button type="button" class="btn btn-sm btn-warning active"><i class="icon-file icon-white"></i>Upload Data</button></a></li>
+		<li><a href="/result"><button type="button" class="btn btn-sm btn-info"><i class="icon-search icon-white"></i>Analyze Data</button></a></li>
+		<li><a href="/home"><button type="button" class="btn btn-sm btn-info"><i class="icon-user icon-white"></i>My Account</button></a></li>
+	</div>
+	</div>
+	</nav>
+	<div class="row">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-10">
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+			<h3 class="panel-title">Welcome to MyUpload!</h3>
+			</div>
+			<div class="panel-body">
+				<div class="well">
+					<p>#{maxfilesnr_message}</p> 
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-1"></div>
+	</div>
+	</body>
+
+block content
+
+	.row
+		.container
+			table.table.table-condensed.table-hover
+				tbody
+					tr
+						p
+		
+
+					tr
+						div.col-sm-12 
+							#drop-form-container
+							link(rel="stylesheet", href="/javascripts/css/dropzone.css")
+							form(action="/superrare" class="dropzone" id="mydropzone")
+							input(type='hidden', value='', id='userId')
+				
+					form#myForm
+
+						td
+							label.col-sm-5(for='text') Which kind of image will you upload?
+						td 
+							
+								.col-sm-6
+									select#selector(name='selector')
+										option(value='0') Natural Image (photo)
+										option(value='3') Advertising/Poster
+										option(value='1') Web Site - general
+										option(value='2') Web Site - galery
+										option(value='4') No influence of the type of image
+
+					tr
+						td
+							label.col-sm-5(for='text') Use object information: 
+						td
+								
+								
+							input#box1(type='checkbox', value='Yes', name='choix1')
+							input#box2(type='hidden', value='Yes', name='choix2')
+
+					//tr
+						//td
+							//label.col-sm-5(for='text') Use face information (if checked the computation time is much higher) :  
+						//td
+							
+							//input#box2(type='hidden', value='Yes', name='choix2')
+				
+					tr 
+						td 
+						td
+							.form-group
+								button#submit-all.btn.btn-primary.btn-block(type='button')
+									span.glyphicon.glyphicon-upload
+									| Submit files
+
+
+	
+
+block scripts
+	script(src='liveclock.js')
+	script(src='/vendor/jquery.min.js')
+	script(src='/vendor/jquery.form.js')
+	script(src='/vendor/bootstrap-modal.js')
+	script(src='/vendor/bootstrap-transition.js')
+	script(src='/javascripts/views/home.js')
+	script(src="/bootstrap/js/jquery.min.js")
+	script(src="/bootstrap/js/bootstrap.min.js")
+	script(src='/javascripts/bootstrap.min.js')
+	script(src='/javascripts/ie10-viewport-bug-workaround.js')
+	script(src='/javascripts/controllers/homeController.js')
+	script(src='/javascripts/form-validators/accountValidator.js')
+	script(src='/javascripts/dropzone.js')
+	script(src='/javascripts/Chart.js')
+	script(type='text/javascript').
+
+
+		function setCookie(c_name, value, expiredays) {	 
+			var exdate=new Date();
+			exdate.setDate(exdate.getDate()+expiredays);
+			document.cookie=c_name+ "=" +escape(value)+
+			((expiredays==null) ? "" : ";expires="+exdate.toGMTString()); 
+		}
+
+		Dropzone.options.mydropzone = 
+		{
+			paramName: "file",
+			autoProcessQueue: false,
+			maxFiles: #{maxFiles},
+			init: function() 
+			{
+			var submitButton = document.querySelector("#submit-all")
+			myDropzone = this; // closure
+
+				submitButton.addEventListener("click", function() {
+				var image_type = document.getElementById('selector');
+				var obj_feature = document.getElementById('box1');
+				var face_feature = document.getElementById('box2');
+				var tableau = [];
+				tableau[0] = image_type.value;
+				tableau[1] = obj_feature.checked;
+				tableau[2] = face_feature.checked;
+				setCookie("superrare", tableau, 365);
+				myDropzone.processQueue(); 
+
+				});
+			this.on("addedfile", function() {});
+			this.on("maxfilesexceeded", function(file) { this.removeFile(file); });
+			}
+		};
+		
+
+
+

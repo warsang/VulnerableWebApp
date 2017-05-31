@@ -1,0 +1,91 @@
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : { }
+// store the userId on the client side in a hidden input field //
+input(type='hidden', value= user._id)#userId
+
+div.row
+	div.col-sm-1
+	div.col-sm-10
+		div.panel.panel-danger
+			div(class="well")#prospectWell
+				p.sub2.subheading 
+				table.table.table-striped#manage-accounts
+					thead
+						tr
+							th Statut
+							th Type de contrat
+							th Secteur
+							th Institution
+							th Fonction
+							th Civilité
+							th Nom
+							th Prénom
+							th Mobile
+							th Fixe
+							th email
+							th Relation
+					tbody
+						- var counter = 0;
+							each item in prospects
+									-counter=counter+1;
+									tr
+										td= item.Statut
+										td= item.TypeDeContrat
+										td= item.Secteur
+										td= item.institution
+										td= item.Fonction
+										td= item.Civilité
+										td= item.name
+										td= item.surname
+										td= item.Mobile
+										td= item.Fixe
+										td= item.email
+										td= item.Relation
+										td
+											button(type="button" class="btn btn-info btn-lg show" data-toggle="modal" data-target="#myModal"+counter) Read form
+											form(name="deleteProspect"+counter action="/deleteProspect?p="+item._id method="post")
+												button(type="submit" value="submit" class="btn btn-danger btn-lg show glyphicon glyphicon-trash") Delete
+											div(class="modal fade" id="myModal"+counter role="dialog")
+													div(class="modal-dialog modal-lg" style="max-width: 545px; float:left;")
+														<!-- Modal content-->
+														<div class="modal-content">
+														div(class="modal-header")
+															button(type="button" class="close" data-dismiss="modal")&times;
+															h4(class="modal-title")= item.name +' '+ item.surname
+														div(class="modal-body")
+															p(style="word-break: break-all;")= 'Statut: ' + item.Statut
+															p(style="word-break: break-all;")= 'Type de contrat: ' + item.TypeDeContrat
+															p(style="word-break: break-all;")= 'Secteur: ' + item.Secteur
+															p(style="word-break: break-all;")= 'institution: ' + item.institution
+															p(style="word-break: break-all;")= 'Fonction: ' + item.Fonction
+															p(style="word-break: break-all;")= 'Civilité: ' + item.Civilité
+															p(style="word-break: break-all;")= 'Prénom: ' + item.name
+															p(style="word-break: break-all;")= 'Nom: ' + item.surname
+															p(style="word-break: break-all;")= 'Mobile: ' + item.Mobile
+															p(style="word-break: break-all;")= 'Fixe: ' + item.Fixe
+															p(style="word-break: break-all;")= 'email: ' + item.email
+															p(style="word-break: break-all;")= 'Adresse 1: ' + item.Adresse2
+															p(style="word-break: break-all;")= 'Adresse 2: ' + item.Adresse2
+															p(style="word-break: break-all;")= 'Code Postal: ' + item.CodePostal
+															p(style="word-break: break-all;")= 'Ville: ' + item.Ville
+															p(style="word-break: break-all;")= 'Pays: ' + item.country
+															p(style="word-break: break-all;")= 'Contexte de la rencontre: ' + item.Meeting
+															p(style="word-break: break-all;")= 'Rencontre 1: ' + item.Contact1
+															p(style="word-break: break-all;")= 'Rencontre 2: ' + item.Contact2
+															p(style="word-break: break-all;")= 'Relation: ' + item.Relation
+														div(class="modal-footer")
+															form(name="edit"+counter action="/adminProspects" method="post")
+																input(type="hidden" name="prospectId" value= item._id)
+																button(type="submit" style="float:left;" class="btn btn-default close") Editer
+															button(type="button" class="btn btn-default close" data-dismiss="modal") Fermer
+														</div>	
+						tr
+							td(colspan="6")
+								a(href="/clientprospectform")
+									button(type='button'  class="btn btn-sm btn-info")<i class="glyphicon glyphicon-upload"></i>Add Prospect Manually
+				p.sub2.subheading 
+				hr
+
+			// display form errors in a custom modal window //
+			include modals/form-errors
+	div.col-sm-1

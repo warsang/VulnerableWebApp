@@ -1,0 +1,814 @@
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : { }
+- maxfilesnr_message = typeof(messageAlert) != 'undefined' ? messageAlert : { }
+- statusDel = typeof(statusDel) != 'undefined' ? statusDel : { }
+- folders = typeof(folders) != 'undefined' ? folders : { }
+html.
+	<head>
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/vendor/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Bootstrap theme -->
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="/css/predattor.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+
+	<!--Style sheet for home blocks -->
+	<link href="/css/home-style.css" rel="stylesheet">
+	<link href="css/bootstrap-slider.css" rel="stylesheet">
+	
+	<!--Extra style sheet-->
+	<link href="css/z-indexoverwrite.css" rel="stylesheet">
+	<!-- Carousel CSS -->
+	<link rel="stylesheet" type="text/css" href="css/jcarousel.responsive.css">
+	
+	<!--Character set for é-->
+	<meta charset="utf-8" />
+	</head>
+
+	<body role="document">
+	<nav class="navbar navbar-inverse navbar-default">
+	<div class="container-fluid">
+	<div class="navbar-header">
+	<a class="navbar-brand" href="/home"><font size="5">ITTENTION</font></a>
+	</div>
+	<div id="navbar" class="navbar-collapse collapse">
+	<ul class="nav navbar-nav">
+	<li> <a href="/home"><button type="button" class="btn btn-md btn-info"><span class="glyphicon glyphicon-home"></span> Home</button></a></li>
+	<li> <a href="/app"><button type="button" class="btn btn-md btn-warning active"><span class="glyphicon glyphicon-film"></span> My Ittention Application</button></a></li>
+	<li> <a href="/account"><button type="button" class="btn btn-md btn-info"><span class="glyphicon glyphicon-user"></span> My Account/Sign Out</button></a></li>
+	</ul>
+	</div>
+	</div>
+	</nav>
+
+input(type='hidden', value= user._id)#userId
+.row
+	div.col-sm-1
+	div.col-sm-10
+		div.panel.panel-success
+			div.panel-heading
+				h3.panel-title Etape 1: Téléchargez vos images !
+			div.panel-body
+				.row
+					div.col-sm-7
+						#drop-form-container
+							link(rel="stylesheet", href="/javascripts/css/dropzone.css")
+							form(action="/superrare" class="dropzone" id="mydropzone")
+								input(type='hidden', value='', id='userId')
+					div.col-sm-5
+						.well
+							.row
+								label.col-sm-12(for='text') 0/ Choisissez le folder pour l'image que vous téléchargez :
+							.row
+								label.col-sm-1(for='text')
+								select#folderSelector.selector(name='folderSelector')
+									each key in folders
+										option(value="#{key.id_}") #{key.folderName}
+							br
+							.row
+								label.col-sm-12(for='text') 1/ Téléchargez vos images en utilisant la zone dédiée. Vous pouvez télécharger jusqu'à 10 images en même temps avec les formats classiques (jpeg, png, ...). 
+							br
+							.row
+								label.col-sm-12(for='text') 2/ Choisissez le type d'image que vous téléchargez :
+							.row
+								label.col-sm-1(for='text')
+								select#selector(name='selector')
+									option(value='5') Catalogue dense premiere vue
+									option(value='6') Catalogue dense deuxieme vue
+									option(value='7') Catalogue leger premiere vue 
+									option(value='8') Catalogue leger deuxieme vue
+									option(value='0') Image naturelle (photo)
+									option(value='3') Publicité/Poster
+									option(value='1') Web Site - général
+									option(value='2') Web Site - galerie
+									option(value='4') Pas d'influence du type d'image
+							br
+							.row
+								label.col-sm-7(for='text') 3/ Cochez si votre image contient des visages
+								input#box2(type='checkbox', name='choix2', style='margin: 0; height: 20px')
+								input#box1(type='hidden', value='Yes', name='choix1')
+							br
+							.row
+								label.col-sm-12(for='text') 4/ Cliquez sur le bouton suivant :
+							.form-group
+								button#submit-all.btn.btn-info.btn-block(type='button')
+									span.glyphicon.glyphicon-upload
+										|  Téléchargez les fichiers
+							.row
+								label.col-sm-12(for='text') 5/ Le processus peut prendre plusieurs dizaines de secondes. Un symbole vert apparaitra à la fin du téléchargement. Vous serez alors automatiquement dirigé sur votre galerie d'images (Etape 2).
+							br
+							.row
+								label.col-sm-12(for='text') 6/ Une fois les 10 fichiers téléchargés, rafraichissez la page pour pouvoir en télécharger 10 autres.
+	div.col-sm-1
+<div class="row">
+<div class="col-sm-1"></div>
+<div class="col-sm-10">
+<div class="panel panel-danger">
+<div class="panel-heading">
+<h3 class="panel-title" id="step2">Etape 2: Parcourez et gérez votre galerie d'images !</h3>
+</div><!--.panel-heading-->
+<div class="panel-body">
+<div class="well well-sm">
+<p>Sélectionnez une image dans votre galerie. Vous pouvez visualiser toutes les images de la galerie en utilisant les flèches positionnées à droite et à gauche de la galerie.</p>
+</div><!--.well.well-sm-->
+<div class="wrapper">
+<div class="jcarousel-wrapper">
+<div class="jcarousel" id="jcarousel">
+<ul id="myDiv1">
+<li></li>
+</ul><!--#myDiv1-->
+</div><!--.jcarousel#jcarousel-->
+<a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+<a href="#" class="jcarousel-control-next">&rsaquo;</a>
+<!--p class="jcarousel-pagination"></p-->
+</div><!--.jcarousel-wrapper-->
+</div><!--.wrapper-->
+<div class="well">
+<p>Il vous est possible d'effacer les images que vous désirez (si vous avez plus de 5 images dans votre galerie) :</p>
+<p>1/ Sélectionnez une image dans votre galerie.</p>
+<p>2/ Appuyez sur le bouton rouge: après confirmation votre image sera supprimée DEFINITIVEMENT.</p>
+<form method="post" name="form2" id="delete_picture">
+<input type="submit" value="Effacer l'image sélectionnée" class="btn btn-danger btn-md">
+</form>
+</div><!--.well-->
+</div><!--.panel-body-->
+</div><!--.panel.panel-danger-->
+</div><!--.col-sm-10-->
+<div class="col-sm-1"></div><!--.col-sm-1-->
+</div><!--.row-->
+
+<div class="row">
+<div class="col-sm-1"></div>
+
+<div class="col-sm-7">
+<div class="panel panel-success">
+<div class="panel-heading">
+<h3 class="panel-title" style="padding: 0 10px; display: inline;">Etape 3 : Visualisez la carte d'attention</h3><span class="total_draw" style="display: inline; width: 10px; height: 10px;"></span>
+</div>
+<div class="panel-body">
+<div id="centrage">
+<div id="myDiv41" class="canvasDiv"></div>
+<div id="myDiv43" class="canvasDiv"></div>
+<div id="myDiv42" class="canvasDiv"></div>
+<div id="cucu" class="canvasDiv"></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="col-sm-3" style="position: static">
+<div class="panel panel-success">
+<div class="panel-heading">
+<h3 class="panel-title">Etape 3 : Controlez votre visualisation !</h3>
+</div>
+<div class="panel-body">
+<div class="well">
+<p> Bougez le slider !</p>
+<span id="ex6CurrentSliderValLabel">Transparence Carte d'Attention : <span id="ex6SliderVal">50</span> % </span><br>
+<input id="ex6" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/>	
+<!-- Button trigger modal -->
+<p></p><hr>
+<button type="button" class="btn btn-success btn-md btn-block" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-education"></span> Expert : La carte d'attention</button>						
+</div>
+<div class="well">
+<p>1/ Sélectionnez une image dans votre galerie.</p>
+<p>2/ Sélectionnez les régions d'intérêt: avec la souris cliquez deux fois dans l'image. Le premier click représente le coin en haut à gauche de cotre région, le deuxième le coin en bas à droite.</p>
+<p>3/ Répétez l'opération pour toutes vos régions d'intérêt (maximum 20).</p>
+<p>4/ Appuyez sur le bouton d'analyse (bleu en dessous) seulement APRES avoir sélectionné toutes vos régions.</p>
+<p>5/ Si vous vous trompez vous pouvez effacer toutes vos régions avec le bouton d'effacement (orange en dessous).</p>
+
+<form method="post" name="form1" id="analyse_rois">
+<input type="submit" value="Analyse de régions sélectionnées !" class="btn btn-info btn-md btn-block">
+</form>	
+
+<form name="form">				
+<div id="myDiv44"></div>
+<input type="reset" onclick="reset_roi()" value="Effacer les régions sélectionnées ..." class="btn btn-warning btn-md btn-block">
+</form>
+<button type="button" class="btn btn-success btn-md btn-block" data-toggle="modal" data-target="#myModal2"><span class="glyphicon glyphicon-education"></span> Expert : La régions d'intérêt</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="col-sm-1"></div>
+</div>
+
+<div class="row">
+<div class="col-sm-1"></div>
+<div class="col-sm-3" style="position: static">
+<div class="panel panel-danger">
+<div class="panel-heading">
+<h3 class="panel-title" id="step3">Etape 4 : Vos régions d'intérêt</h3>
+</div>
+<div class="panel-body">
+<div class="well">
+<p>L'analyse des régions d'intérêt fournit deux séries d'information</p>
+<p>1/ Le chemin du regard dans l'image avec à chaque fois l'influence de l'endroit du regard sur la carte d'attention. Des chiffres d'efficacité visuelle sont fournis pour chaque région: plus ce chiffre est proche de 100%, plus la région est visible rapidement par le client.</p>
+<p>2/ Des chiffres sur l'information visuelle. L'efficacité représente le rapport entre l'information visuelle efficace et l'ensemble de l'information visuelle de l'image. La clarté représente le taux d'ordre ou de de désordre dans une image. Enfin l'impact donne une information sur la facilité de mémorisation éventuelle de l'image.</p>
+<button type="button" class="btn btn-success btn-md btn-block" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-education"></span> Expert : Interpréter les résultats</button>
+<button type="button" class="btn btn-info btn-md btn-block" id="download_pdf" value="Telechargez PDF!" style="display: none">Telechargez PDF!</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="col-sm-7">
+<div class="panel panel-danger">
+<div class="panel-heading">
+<h3 class="panel-title" style="padding: 0 10px; display: inline;">Etape 4 : Analyse des régions d'intérêt</h3><span class="total_draw" style="display: inline; width: 10px; height: 10px;"></span>
+</div>
+<div class="panel-body">
+<div id="centrage2">
+<div id="cucu2">
+<!--section class="demo" id="slider-analysis">
+<div class="slider-bt">
+<button aria-label="previous" class="prev slick-prev" data-role="none" type="button" style="display: block;">Previous</button><button aria-label="next" class="next slick-next" data-role="none" type="button" style="display: block;">Next</button>
+<div class="container-analysis">
+<div style="display: inline-block;">
+<img src="http://193.190.210.22:3000/superrare/b004421de079bb2531cc5cd6346d202d/876bd2c4c6dd45ec7e32b8f9d483615f/analyse1.jpg"/>
+</div>
+<div><img src="http://193.190.210.22:3000/superrare/b004421de079bb2531cc5cd6346d202d/876bd2c4c6dd45ec7e32b8f9d483615f/analyse2.jpg"/></div>
+<div><img src="http://193.190.210.22:3000/superrare/b004421de079bb2531cc5cd6346d202d/876bd2c4c6dd45ec7e32b8f9d483615f/analyse3.jpg"/></div>
+<div><img src="http://193.190.210.22:3000/superrare/b004421de079bb2531cc5cd6346d202d/876bd2c4c6dd45ec7e32b8f9d483615f/analyse4.jpg"/></div>
+</div>
+</div>
+</section-->
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-sm-1"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<h4 class="modal-title" id="myModalLabel">Cartes d'Attention</h4>
+</div>
+<div class="modal-body">
+<p>La carte d'attention (ou carte de saillance) permet de visualiser au moyen d'une carte de chaleur, pour chaque pixel d'une image, la probabilité de ce pixel d'être vu par un humain moyen. Ainsi les régions proches de l'orange et du rouge ont plus de chances d'être remarquées que les régions en vert et bleu.</p>
+<p>La carte d'attention issue des algorithmes de ITTENTION est basée sur 10 années de recherches universitaire. Les régions dignes d'intérêt seront celles dont les caractéristiques (luminance, couleurs, orientations) sont les rares dans l'ensemble de l'image et contrastées localement dans l'image. D'autres informations comme le type d'image, la couleur de la peau ou les visages sont utilisées pour améliorer cette carte.</p>
+<p>La carte d'attention d'ITTENTION a déjà été comparée avec des résultats de eye-tracking avec des résultats très proches.</p>
+<p>Une carte d'attention n'a cependant pas pour ambition de parfaitement prédire le regard des personnes (qui peut d'ailleurs fortement varier entre les individus). Le but est de prédire ce que va attirer l'attention d'une personne d'une manière "réflexe" donc commune à tous dans les toutes premières secondes (1 à 5 maximum). Cette carte n'est pas un outil de création, mais d'optimisation de la visibilité des informations.</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-info" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Fermer</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<h4 class="modal-title" id="myModalLabel">Les régions d'intérêt</h4>
+</div>
+<div class="modal-body">
+<p>Une région d'intérêt représente d'abord une région qui a une fonction importante dans la communication visuelle (une région de prix, de "call to action", de présentation d'un produit, etc...).</p>
+<p>Une région d'intérêt peut aussi être tout élément visuel (visage, personne, texture, etc...) à tester pour voir par exemple si celui-ci peut perturber le client (distracteur)</p>
+<p>Vous devez choisir au moins une région d'intérêt AVANT de lancer l'analyse.</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-info" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Fermer</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<h4 class="modal-title" id="myModalLabel">Interprétation des résultats</h4>
+</div>
+<div class="modal-body">
+<p>Le chemin du regard est une notion très importante: notre oeil ne parcourt pas une image de manière linéaire, mais en utilisant des fixations (temps de découverte durant lequel la région fovéale, au centre de la rétine, se concentre sur des détails) et des saccades (saut d'une fixation à une autre). Le chemin du regard est un processus très dynamique (il peut être fortement influencé par l'endroit où est porté initialement le regard) et peut aussi fortement dépendre d'une personne à une autre. Cela est surtout le cas dans les images complexes, trop chargées et où il n'y a pas véritablement de l'information qui ressort plus qu'une autre. Un chemin du regard trop long ou trop complexe et instable entre les clients est néfaste: il induit une sensation d'inconfort. Le but de l'optimisation est de faire ressortir quelques éléments forts dans un visuel (pas trop d'éléments!) qui vont servir de guide au regard vers un chemin optimal en termes de longueur par rapport à la couverture du visuel (comme un chemin en Z ou en F selon le type de visuel). Un chemin visuel optimisé permet d'éviter l'inconfort des clients et leur dispersion: il est alors possible de les amener tous par le même chemin vers les régions qu'il doit voir. Un chemin qui couvre le visuel permet de voir "en passant" aussi des éléments moins saillants qui se retrouve de manière "fortuite" sur le parcours visuel.</p>
+<p>Dans les images de résultat, l'épaisseur du trait des flèches dépend de la probabilité de transition entre le début et la fin de la flèche: plus le trait est gros, plus ce mouvement a des chances de se produire. Le pourcentage d'efficacité visuelle permet de savoir si la région est visible: proche de 100% la région est très visible, proche de 0%, il est très difficile pour le client de voir la zone a priori d'une manière réflexe. Il ne va soit pas voir cette région du tout, soit il la verra au prix d'un effort cognitif qu'il n'est peut-être pas disposé à payer.</p>
+<p>L'efficacité de l'information visuelle permet de savoir quel est le pourcentage d'information de l'image qui est vraiment utile (c'est à dire facile à percevoir pour le client). Un résultat proche de 100% signifie que la plupart de l'information de l'image est importante: un catalogue aura un résultat plus élevé qu'une photo avec un visage par exemple.</p>
+<p>La clarté permet de savoir à quel point une image est plus chargée qu'une autre. Une clarté proche de 100% sera par exemple un carré noir sur un fond blanc. Un bruit (comme la neige de TV par exemple) sera lui très proche de 0%.</p>  
+<p>L'impact va donner une idée de l'habilité qu'aura un client de mémoriser une image en se basant sur la différence d'attention entre cette images et d'autres de même type. Il y a 3 possibilités de sortie: "SMALL", "MAYBE" et "HIGH". Dans les deux premiers cas, l'image n'est pas mémorable d'un point de vue de la structure de l'attention. Cela ne signifie cependant pas qu'elles ne sont pas mémorables: elles peuvent par exemple avoir un contenu émotionnel qui n'est pas détectable et qui les rends mémorables. Par contre, si le résultat est "HIGH", il y a des fortes chances que l'image soit mémorable.</p>  
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-info" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span> Fermer</button>
+</div>
+</div>
+</div>
+</div>
+
+</body>
+
+block scripts
+	script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+	script(src='/vendor/jquery.form.js')
+	script(src='/javascripts/bootstrap.min.js')
+	script(src='/javascripts/bootstrap-slider.js')
+	script(src='/vendor/bootstrap-transition.js')
+	script(src='/javascripts/jquery.jcarousel.min.js')
+	script(src='/javascripts/jcarousel.responsive.js')
+	script(src='/javascripts/ie10-viewport-bug-workaround.js')
+	script(src='/javascripts/controllers/homeController.js')
+	script(src='/javascripts/form-validators/accountValidator.js')
+	script(src='/javascripts/hist/jquery.js')
+	script(src='/javascripts/hist/jquery.flot.js')
+	script(src='/javascripts/hist/jquery.flot.stack.js')
+	script(src='/javascripts/dropzone.js')
+	script(src='/javascripts/jspdf.js')
+	script(type='text/javascript').
+
+		$(document).ready(function(){
+			$('#folderSelector').change(function(e){
+				e.preventDefault();
+				//$('.jcarousel').jcarousel('reload');
+				//jQuery('.jcarousel').reload();
+				//$('.jcarousel').jcarousel('reload');
+				//return false;
+				var folderID = this.value;
+				$.ajax({
+					url: "/get_pictures_by_folder_id",
+					type: "POST",
+					dataType: "json",
+					data: {
+						folderID: folderID
+					},
+					cache: false,
+					timeout: 5000,
+					complete: function() {
+						//called when complete
+						console.log('process complete');
+					},
+					success: function(response) {
+						if(response.status == '200')
+						{
+							// variables
+							var data_input=response.data_in;//"#{data_in}";
+							var crypt_input=response.crypt_in;//"#{crypt_in}";	
+							var trip = data_input;
+							var str1 = "/";
+							var str2 = ".jpg";
+							var str3 = "superrare";
+							var image2=[];
+							var laroute = [];
+							var temp = [];
+							var size = trip.length;
+
+							// fill the carousel
+							if (size >= 1 && trip[0]!='') {
+								$("#myDiv1").empty();
+								for( i= (size - 1) ; i >= 0 ; i--) {	
+									// get image path;
+									image2[i] = str1.concat(str3+str1+crypt_input+str1+trip[i]+str1+trip[i]+str2);								
+									var str8 = "<li><img src='";
+									var str9 = " '/  onClick='reply_click(this.src)'></li>\n";
+									// form the lines to add to the carousel			
+									temp = str8.concat(image2[i] + str9);
+									laroute = laroute + temp;
+									//inject thml into carousel
+									document.getElementById('myDiv1').innerHTML = laroute;
+									//$('.jcarousel').jcarousel('reload');
+								}
+								$('.jcarousel').reload();
+							}
+							else
+							{
+								//document.getElementById('myDiv1').innerHTML = "<li></li>";
+							}
+						}
+						else
+						{
+							console.log('no pics');
+						}
+					},
+					error: function() {
+						//console.log('process error');
+					},
+				});
+			});
+
+			var doc = new jsPDF();		
+			$('#download_pdf').click(function(e){
+				e.preventDefault();
+				var rois = 	$('#regions').val();
+				if(rois){
+					var roi_nr = rois.split('\n').length;
+					var image_name = $('#imagename').val();
+					$.ajax({
+						url: "/create_pdf",
+						type: "POST",
+						dataType: "json",
+						data: {
+							roi_nr: roi_nr,
+							image_name: image_name
+						},
+						cache: false,
+						timeout: 5000,
+						complete: function() {
+							//called when complete
+							console.log('process complete');
+						},
+						success: function(data) {
+							doc.setFontSize(40);
+							// We'll make our own renderer to skip this editor
+							doc.text(35, 25, "Original Image");
+							doc.addImage(data[0], 'JPEG', 15, 40, 180, 180);
+							doc.addPage();
+							doc.text(35, 25, "Saliency");
+							doc.addImage(data[1], 'JPEG', 15, 40, 180, 180);
+							for( j = 1 ; j <= roi_nr ; j++) {
+								doc.addPage();
+								doc.text(35, 25, "Analysis"+j);
+								doc.addImage(data[j+1], 'JPEG', 15, 40, 180, 180);
+							}
+							doc.save('sample-file.pdf');
+							console.log('process sucess');
+						},
+						error: function() {
+							console.log('process error');
+						},
+					});
+				} else {
+					alert('Please create the saliency map first');
+				}
+				return false
+			});
+
+			var currentIndex = 0,
+			items = $('.container-analysis div'),
+			itemAmt = items.length;
+
+			function cycleItems() {
+				var item = $('.container-analysis div').eq(currentIndex);
+				items.hide();
+				item.css('display','inline-block');
+			}
+
+			$('#cucu2').on("click", ".next", function(event){
+				currentIndex += 1;
+				if (currentIndex > itemAmt - 1) {
+					currentIndex = 0;
+				}
+				cycleItems();
+			});
+
+			$('#cucu2').on("click", ".prev", function(event){
+				currentIndex -= 1;
+				if (currentIndex < 0) {
+					currentIndex = itemAmt - 1;
+				}
+				cycleItems();
+			});
+
+			$('#delete_picture').submit(function(e){
+				e.preventDefault();
+				/*
+				var carousel = $('.jcarousel');
+				$( "li img[src='/superrare/b004421de079bb2531cc5cd6346d202d/a27086363037663dea4067ffacad87aa/a27086363037663dea4067ffacad87aa.jpg ']" ).css('border', '2px solid red');
+				var item = carousel.find("li img[src='/superrare/b004421de079bb2531cc5cd6346d202d/a27086363037663dea4067ffacad87aa/a27086363037663dea4067ffacad87aa.jpg ']");
+				if (carousel.jcarousel('visible').index(item) < 0) {
+					item.remove();
+					carousel.jcarousel('reload');
+				}
+				*/
+				var message = 'Are you sure you want to delete this picture?';
+				if (confirm(message)) {
+					// write ROI (tab variable) in cookie
+					setCookie("ROI" ,tab, 365);
+					$.ajax({
+						url:'delete_picture',
+						data: '',
+						success:function(result){
+							if (result.status == "403") {
+								window.location.reload();
+							}
+							else {
+								document.getElementById('myDiv41').innerHTML = '';
+								document.getElementById('myDiv42').innerHTML = '';
+								document.getElementById('myDiv43').innerHTML = '';
+								document.getElementById('cucu').innerHTML = '';
+								window.location.reload();
+							}
+						}
+					});
+				}
+			});
+
+			$('#analyse_rois').submit(function(e){
+				e.preventDefault();
+				// write ROI (tab variable) in cookie
+				setCookie("ROI" ,tab, 365);
+				console.log("send_roi");
+				$('.total_draw').html('<img src="css/loader.gif" width="27" height="27">');
+				$.ajax({
+					url:'analyse_rois_ajax',
+					data: '',
+					success:function(result){
+						if (result.status == "403") {
+							window.location.reload();
+						}
+						else {
+							$('.total_draw').html("");
+							$('html,body').animate({
+								scrollTop: '+=' + ($('#step3').offset().top-70) + 'px'
+							}, 'fast');
+
+							var ResImage_ = result.ResultImage;
+							var roiNr =  result.roiNr;
+							var css_sty = '';
+
+							var start_slider = '<section class="demo" id="slider-analysis"><div class="slider-bt"><button aria-label="previous" class="prev slick-prev" data-role="none" type="button" style="display: block;">Previous</button><button aria-label="next" class="next slick-next" data-role="none" type="button" style="display: block;">Next</button><div class="container-analysis">';
+							var middle_slider = '';
+							var end_slider = '</div></div></section>';
+							for( j = 1 ; j <= roiNr+1 ; j++) {
+								if (j == 1)
+								{
+									css_sty = ' style="display: inline-block;"';
+								}
+								else
+								{
+									css_sty = '';
+								}
+								middle_slider = middle_slider + '<div'+css_sty+'><img src="'+ ResImage_.slice(0,ResImage_.length - 4) + j + ResImage_.slice(-4) + '"/></div>';
+							}
+							document.getElementById('cucu2').innerHTML = start_slider+middle_slider+end_slider;
+							items = $('.container-analysis div');
+							itemAmt = items.size();
+							
+							$('#download_pdf').show();
+						}
+					}
+				});
+				return false;
+			});
+		});
+
+		function setCookie(c_name, value, expiredays) {	 
+			var exdate=new Date();
+			exdate.setDate(exdate.getDate()+expiredays);
+			document.cookie=c_name+ "=" +escape(value)+
+			((expiredays==null) ? "" : ";expires="+exdate.toGMTString()); 
+		}
+
+		var j=0;
+		// Ajout des ROIs dans une form cachee		
+		function addtext(text) {
+			document.form.textarea.value = document.form.textarea.value+= text;
+		}
+		// variables
+		var tab = [];
+		var data_input="#{data_in}";
+		var crypt_input="#{crypt_in}";		
+		var ResImage="#{ResultImage}";
+		var trip = data_input.split(",");
+		var str1 = "/";
+		var str2 = ".jpg";
+		var str3 = "superrare";
+		var image2=[];
+		var str4 = "canvas";
+		var str5 = "context";
+		var img=[];
+		var img=new Image();
+		var laroute = [];
+		var temp = [];
+		var size = trip.length;
+		var isDrawing = false;
+		var startX;
+		var startY;
+		var slider = new Slider("#ex6");
+		var img = new Image();
+
+		// fill the carousel
+		if (size >= 1 && trip[0]!='') {
+			for( i= (size - 1) ; i >= 0 ; i--) {	
+				// get image path;
+				image2[i] = str1.concat(str3+str1+crypt_input+str1+trip[i]+str1+trip[i]+str2);								
+				var str8 = "<li><img src='";
+				var str9 = " '/  onClick='reply_click(this.src)'></li>\n";
+				// form the lines to add to the carousel			
+				temp = str8.concat(image2[i] + str9);
+				laroute = laroute + temp;
+				//console.log("hey" + laroute);	
+				//inject thml into carousel
+				document.getElementById('myDiv1').innerHTML = laroute;
+			}
+		}
+		else
+		{
+			//document.getElementById('myDiv1').innerHTML = "<li></li>";
+		}
+		Dropzone.options.mydropzone = 
+		{
+			paramName: "file",
+			autoProcessQueue: false,
+			maxFiles: #{maxFiles},
+			init: function() 
+			{
+				var submitButton = document.querySelector("#submit-all");
+				myDropzone = this; // closure
+				submitButton.addEventListener("click", function() {
+					var image_type = document.getElementById('selector');
+					var image_folder = document.getElementById('folderSelector');
+					var obj_feature = document.getElementById('box1');
+					var face_feature = document.getElementById('box2');
+					var tableau = [];
+					tableau[0] = image_type.value; //0 ---
+					tableau[1] = obj_feature.checked; //false
+					tableau[2] = face_feature.checked; //false
+					setCookie("mysuperrare", tableau, 365);
+					setCookie("image_folder", image_folder.value, 365);
+					myDropzone.processQueue(); 
+				});
+				this.on("addedfile", function() {});
+				this.on("maxfilesexceeded", function(file) { this.removeFile(file); });
+				this.on("success", function(file, responseText) {
+					if (responseText.status == "403") {
+						window.location.reload();
+					}
+					else {
+						var targetOffset = $('#step2').offset().top - 100;
+						$('html, body').animate({scrollTop:targetOffset}, '500');
+						// Handle the responseText here. For example, add the text to the preview element:
+						//file.previewTemplate.appendChild(document.createTextNode(responseText));
+						var new_image = '';
+						var crypt_input_ = responseText.crypt_in;
+						var data_in_ = responseText.data_in;
+						image2_ = str1.concat(str3+str1+crypt_input_+str1+data_in_+str1+data_in_+str2);								
+						var str8 = "<li><img src='";
+						var str9 = " '/  onClick='reply_click(this.src)'></li>\n";
+						// form the lines to add to the carousel			
+						temp = str8.concat(image2_ + str9);
+						new_image = new_image + temp;
+						$("#myDiv1").prepend(new_image); //myDiv44
+						$('.jcarousel').jcarousel('reload');
+						//jQuery('.jcarousel').reload();
+						//var jcarousel = $('.jcarousel');
+						//jcarousel.add();
+					}
+				});
+				}
+		};
+
+		// canvas for the analysis image
+		// the 0 - which became the 4th
+		document.getElementById('cucu').innerHTML = '<canvas id=\'canvas4\' width=\'800\' height=\'100\' style=\'position: absolute;margin-left:auto;z-index:1;top:10; bottom: 0; left: 0; right: 0; margin:auto;\'>';
+		var canvas4 = document.getElementById("canvas4");
+		var ctx4 = canvas4.getContext("2d");
+
+		// if an item is clicked, it needs to be shown with saliency map in tranparency
+		function reply_click(clicked_id) {
+			var url = clicked_id;
+
+			var split_url = url.split('/');
+			var image_name_ext = split_url[split_url.length-1].split('.');
+			var image_name = image_name_ext[0];
+
+			var canvas4 = document.getElementById("canvas4");
+			canvas4.width = canvas4.width;
+
+			j=0;
+			tab= [];					
+			// set up the 3 canvas (initial, saliency, ROIs)
+			// the first one
+			document.getElementById('myDiv41').innerHTML = '<canvas id=\'canvas\' width=\'600\' height=\'100\' style=\'position: absolute;margin-left:auto;z-index:8;top:10; bottom: 0; left: 0; right: 0; margin:auto;\'>';
+			// the second one - empty
+			document.getElementById('myDiv43').innerHTML = '<canvas id=\'canvas3\' width=\'600\' height=\'100\' style=\'position: absolute;margin-left:auto;z-index:4;top:10; bottom: 0; left: 0; right: 0; margin:auto;\'>';
+			// the third one
+			document.getElementById('myDiv42').innerHTML = '<canvas id=\'canvas2\' width=\'600\' height=\'100\' style=\'position: absolute;margin-left:auto;z-index:1;top:10; bottom: 0; left: 0; right: 0; margin:auto;\'>';	
+			// set up the hidden textarea to store ROI data 
+			document.getElementById('myDiv44').innerHTML = '<textarea id="regions" disabled="disabled" rows="4" name="textarea" style="display:none;"></textarea><input type="hidden" name="imagename" id="imagename" value="'+image_name+'">';
+			// store image url in cookie (should be replaced by websockets, secured and able to change only a given div without page reload)				
+			setCookie("url" ,url , 365);
+			//function reply(regions)
+			//	{
+			//		console.log("try" +region);
+			//	}	
+			ctx4.clearRect(0,0,canvas4.width,canvas4.height);
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+			var canvas2 = document.getElementById("canvas2");
+			var ctx2 = canvas2.getContext("2d");
+			var canvas3 = document.getElementById("canvas3");
+			var ctx3 = canvas3.getContext("2d");	
+			// get the saliency image url
+			var name = clicked_id.split(".");
+			var str9 = "saliency.jpg";
+			var size = name.length;			
+			switch ( size )
+			{
+				case 2:
+					var str8 = name[0].concat(str9);
+				break;
+				case 3:
+					var str8 = name[0].concat(name[1]+str9);
+				break;
+				case 4:
+					var str8 = name[0].concat(name[1]+name[2]+str9);
+				break;
+				case 5:
+					var str8 = name[0].concat("."+name[1]+"."+name[2]+"."+name[3]+str9);
+				break;	
+				case 6:
+					var str8 = name[0].concat("."+name[1]+"."+name[2]+"."+name[3]+"."+name[4]+str9);
+				break;
+				case 7:
+					var str8 = name[0].concat("."+name[1]+"."+name[2]+"."+name[3]+"."+name[4]+"."+name[5]+str9);
+				break;					
+			}
+
+			// declare the three images (ResImage only exists if analysis)					
+			//var img = new Image();
+			img.src = clicked_id;
+			//img.src = str8;
+			var www = 0;
+			var img2 = new Image();
+			img2.src = str8;
+			//img2.src = clicked_id;
+			var img3 = new Image();
+			img3.src = ResImage;
+			// load image1				
+			img.onload = function(){
+				www = 600 * img.height / img.width;
+				canvas2.height = www;
+				canvas.height = www;
+				canvas3.height = www;
+				centrage.style.height = www+"px";
+				ctx.globalAlpha=0.5;
+				ctx.drawImage(img, 0, 0, img.width, img.height, 0,0, 600, www);
+				//ctx.globalAlpha=0.5;
+			}		
+			// load image2
+			img2.onload = function(){
+				//ctx2.globalAlpha=0.5;
+				ctx2.drawImage(img2, 0, 0, img2.width, img2.height, 0,0, 600, 600 * img2.height / img2.width);						
+			}
+			// draw the ROI
+			function handleMouseDown(e) {
+				var offset = canvas.getBoundingClientRect();
+				mouseX = parseInt(e.clientX - offset.left);
+				mouseY = parseInt(e.clientY - offset.top);	
+				//$("#downlog").html("Down: " + mouseX + " / " + mouseY);
+				// Put the mousedown stuff here
+				if (isDrawing) {
+					isDrawing = false;
+					ctx3.beginPath();
+					ctx3.fillStyle = 'white';
+					ctx3.globalAlpha = 0.5;
+					ctx3.fillRect(startX, startY, mouseX - startX, mouseY - startY);
+					ctx3.globalAlpha = 1;
+					ctx3.lineWidth = 2;
+					ctx3.strokeStyle = 'red';
+					ctx3.stroke();
+					ctx3.strokeRect(startX, startY, mouseX - startX, mouseY - startY);
+					addtext(startX + ";" + startY + ";" + (mouseX - startX) + ";" + (mouseY - startY) + "\n");						
+					tab[j] =  (startX + ";" + startY + ";" + (mouseX - startX) + ";" + (mouseY - startY));
+					j = j + 1;
+					ctx3.font="20px bold Georgia";
+					ctx3.fillStyle = 'red';
+					var roi = "R" +j;
+					ctx3.fillText(roi, startX, startY + 15);
+					ctx3.fillText("BACKGROUND", 10, 15);
+					ctx3.strokeRect(0, 0, 600, www);
+					ctx3.lineWidth = 2;
+					ctx3.stroke();
+					canvas.style.cursor = "default";
+				} else {
+					isDrawing = true;
+					startX = mouseX;
+					startY = mouseY;
+					canvas.style.cursor = "crosshair";
+				}
+			}
+			// call the drawing if click on canvas (the visible one)
+			$("#canvas").mousedown(function (e) {
+				handleMouseDown(e);
+			});
+		}
+
+		// delete canvas3 (the one displaying the ROIs) and empty the tab variable (list of ROIs)
+		function reset_roi() {
+			canvas3.width = canvas3.width;	
+			tab = [];
+			j = 0;	
+		}
+		slider.on("slide", function(slideEvt) {
+			$("#ex6SliderVal").text(slideEvt.value);
+			changeAlpha(slideEvt.value);
+		});
+		// transparence function
+		function changeAlpha(newValue){
+			var canvas = document.getElementById('canvas');
+			var context = canvas.getContext('2d');
+			context.clearRect(0, 0, canvas.width, canvas.height);
+			context.drawImage(img, 0, 0, img.width, img.height, 0,0, 600, 600 * img.height / img.width);
+			context.globalAlpha=(newValue/100);
+		}

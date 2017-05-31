@@ -1,0 +1,141 @@
+html.
+	<head>
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/vendor/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Bootstrap theme -->
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="/css/predattor.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+
+	<!--Style sheet for home blocks -->
+	<link href="/css/home-style.css" rel="stylesheet">
+
+	<!--Character set for é-->
+	<meta charset="utf-8" />
+	</head>
+
+	<body role="document">
+	<nav class="navbar navbar-inverse navbar-default">
+	<div class="container-fluid">
+	<div class="navbar-header">
+	<a class="navbar-brand" href="/home"><font size="5">ITTENTION</font></a>
+	</div>
+	<div id="navbar" class="navbar-collapse collapse">
+	<ul class="nav navbar-nav">
+	<li> <a href="/home"><button type="button" class="btn btn-md btn-warning active"><span class="glyphicon glyphicon-home"></span> Home</button></a></li>
+	<li> <a href="/app"><button type="button" class="btn btn-md btn-info"><span class="glyphicon glyphicon-film"></span> My Ittention Application</button></a></li>
+	<li> <a href="/account"><button type="button" class="btn btn-md btn-info"><span class="glyphicon glyphicon-user"></span> My Account/Sign Out</button></a></li>
+	</ul>
+	</div>
+	</div>
+	</nav>
+
+	<p></p>
+	<div class="container">
+	<div class="row">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-10">
+	<div class="panel panel-danger">
+	<div class="panel-heading">
+	<h3 class="panel-title">Bienvenue à l'accueil ITTENTION !</h3>
+	</div>
+	<div class="panel-body">
+	<div class="well">
+	<div class="row">
+	<div class="col-sm-6">
+	<div class="col-sm-12" id="account">
+	<p>
+	<h2>ITTENTION</h2>
+	</p><p>
+	<p>Bienvenue dans votre compte personnel ITTENTION. Vous utilisez une version beta (de test) qui va vivre de nombreuses évolutions.</p>
+	</p><p>
+	<p>Vous détectez un bug ou avez une suggestion ?</p>
+	</p>
+	<p>
+	<a href="/contact" class="btn btn-primary btn-md">
+	<span class="glyphicon glyphicon-envelope"></span> Envoyez vos remarques !
+	</a>
+	</p>
+	</div>
+	</div>
+	<div class="col-sm-6">
+	<div class="col-sm-12" id="welcome">
+	<p>
+	<h2>Votre compte ITTENTION</h2>
+	</p><p>
+block content
+	p Bienvenue <strong>#{username}</strong> !
+	p Tests restants pour ce mois : <strong>#{nrfiles}</strong>
+html.
+	<p>Hotline client: +33652982417<br>Hotline tech: +33623141933</p> 
+	</p>
+	<a href="/account" class="btn btn-primary btn-md">
+	<span class="glyphicon glyphicon-user"></span> Allez dans votre compte !
+	</a>
+	</div>
+	</div>
+	</div>
+
+	<div class="row">
+	<div class="col-sm-7" >
+	<div class="col-sm-12" id="image">
+	<p>
+	<h2>Votre appli ITTENTION</h2>
+	</p><p>
+	<p>Utilisez l'application ITTENTION pour télécharger vos images et alimenter votre galerie afin d'y effectuer vos tests d'attention.</p>
+	</p><p>
+	<p>Profitez des "cartes d'attention" et analysez vos régions d'intérêt.</p>
+
+	<a href="/app" class="btn btn-primary btn-md">
+	<span class="glyphicon glyphicon-film"></span> Allez dans l'application !
+	</a>
+
+	</p>
+	</div>
+	</div>
+	<div class="col-sm-5">
+	<div class="col-sm-12" id="eyeExpert">
+	<p>
+	<h2>Coin expert</h2>
+	</p><p>
+	<p>Une rubrique d’insights de la part des chercheurs à l’origine de la solution ITTENTION.</p>
+	<p></p>
+	<p>Contribuez, posez vos questions, interagissez...</p>
+	</p><p>
+	<a href="/resources" class="btn btn-primary btn-md">
+	<span class="glyphicon glyphicon-info-sign"></span> Allez dans les ressources !
+	</a>
+	</p>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	<div class="col-sm-1"></div>
+	</div>
+	</div>
+	<div class="row">
+	<div class="col-sm-1">
+	</div>
+	<div class="col-sm-9">
+	<ul class="nav nav-pills">
+	<li><a href="./">Mentions légales</a></li>
+	<li><a href="./">Confidentialité</a></li>
+	<li><a href="/contact">Contact</a></li>
+	</ul>
+	</div>
+	<div class="col-sm-1">
+	<ul class="nav nav-pills">
+	<li><a data-toggle="pill" href="./">Copyright</a></li>
+	</ul>
+	</div>
+	<div class="col-sm-1">
+	</div>
+	</div>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+	</body>
+	

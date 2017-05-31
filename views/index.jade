@@ -1,0 +1,76 @@
+html.
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Contact page">
+<meta name="author" content="Predator">
+
+<title>Formulaire de contact</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/vendor/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap theme -->
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="/css/predattor.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container-fluid">
+<div id="navbar" class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<li> <a href="/home"><button type="button" class="btn btn-sm btn-info"><i class="icon-home icon-white"></i>>Home</button></a></li>
+<li> <a href="/app"><button type="button" class="btn btn-sm btn-info"><i class="icon-film icon-white"></i>>My Ittention Application</button></a></li>
+<li> <a href="/account"><button type="button" class="btn btn-sm btn-info"><i class="icon-user icon-white"></i>>My Account/Sign Out</button></a></li>
+
+</div>
+</div>
+</nav>
+
+<p><br><br><br><br></p>
+
+<div class="container main">
+
+<div class="row">
+<form role="form" action="/contact" method="post" id="form1">
+<div class="form-group">
+<label for="subject">Subject</label>
+<select class="form-control" id="sel1" name="subject">
+<option value="problem">Problème</option>
+<option value="suggestion">Suggestion</option>
+<option value="bug">Bug</option>
+<option value="prospect">Prospect</option>
+</select>
+</div>
+
+<div class="form-group">
+<label for="email">Email</label>
+<input type="email" name="email" class="form-control" required placeholder="Email">
+</div>
+
+<div class="form-group">
+<label for="message">Message</label>
+<textarea name="message" class="form-control" required placeholder="Votre message" rows="3"></textarea>
+</div>
+
+
+
+<button type="submit" form="form1" value="Submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-upload"></span>Submit</button>
+</form>
+
+</div>
+
+</div><!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript-->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js""></script>
+</body>
+

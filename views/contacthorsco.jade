@@ -1,0 +1,105 @@
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : { }
+// store the userId on the client side in a hidden input field //
+html.
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Contact page">
+<meta name="author" content="Predator">
+
+<title>Contact form</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/vendor/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap theme -->
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="/css/predattor.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+
+<!--Style sheet for home blocks -->
+<link href="/css/home-style.css" rel="stylesheet">
+
+<!--SweetcaptchaJS-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="/javascripts/form-validators/sweetcaptcha.js"></script>
+
+<!--Character set for é-->
+<meta charset="utf-8" />
+
+</head>
+
+<body role="document">
+
+if captchaError === 'true'
+    div(class='alert alert-danger')
+      <strong>Error!</strong> Sorry, something went wrong while validating your captcha :(
+
+<p></p>
+<div class="container">
+<div class="row">
+<div class="col-sm-1"></div>
+<div class="col-sm-10">
+<div class="panel panel-danger">
+<div class="panel-heading">
+<h3 class="panel-title">Bienvenue dans la page de contact !</h3>
+</div>
+<div class="panel-body">
+<div class="well">
+<div class="row">
+
+<form role="form" action="/contacthorsco" method="post" id="form1">
+<div class="form-group">
+<label for="subject">Le sujet de votre e-mail:</label>
+<select class="form-control" id="sel1" name="subject">
+<option value="Technique">Technique</option>
+<option value="Commerciale">Commerciale</option>
+<option value="Divers">Divers</option>
+</select>
+</div>
+
+<div class="form-group">
+<label for="adresseMail">Votre adresse e-mail:</label>
+<input type='email' name="adresseMail" class="form-control" required placeholder="Votre mail" required rows="1">
+</div>
+
+<div class="form-group">
+<label for="message">Votre message :</label>
+<textarea name="message" class="form-control" required placeholder="Votre message" rows="3"></textarea>
+</div>
+
+div(id="captchaHolder")!=captcha
+
+
+
+<button type="submit" form="form1" value="Submit" class="btn btn-primary btn-md" id="submitResponse"><span class="glyphicon glyphicon-send"></span> Envoyer !</button>
+</form>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+<div class="col-sm-1"></div>
+</div>
+
+<div class="row">
+<div class="col-sm-1">
+</div>
+<div class="col-sm-9">
+<ul class="nav nav-pills">
+<li><a href="/">Login</a></li>
+</ul>
+</div>
+<div class="col-sm-1">
+</div>
+<div class="col-sm-1">
+</div>
+</div>
+</div>
+
+</body>

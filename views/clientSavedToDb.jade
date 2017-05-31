@@ -1,0 +1,88 @@
+html.
+    <head>
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/predattor.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    </head>
+
+    <body role="document">
+
+
+
+    <nav class="navbar navbar-inverse navbar-default">
+      <div class="container-fluid">
+      <div class="navbar-header">
+      <a class="navbar-brand" href="/home"><font size="5">ITTENTION</font></a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+      <li> <a href="/home"><button type="button" class="btn btn-md btn-info"><span class="glyphicon glyphicon-home"></span> Home</button></a></li>
+      <li> <a href="/app"><button type="button" class="btn btn-md btn-info"><span class="glyphicon glyphicon-film"></span> My Ittention Application</button></a></li>
+      <li> <a href="/account"><button type="button" class="btn btn-md btn-info"><span class="glyphicon glyphicon-user"></span> My Account/Sign Out</button></a></li>
+      </ul>
+      </div>
+      </div>
+      </nav>
+
+        <p><br><br></p>
+        <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                <h3 class="panel-title">Welcome to Admin!</h3>
+                </div>
+                <div class="panel-body">
+                <ul class="nav nav-tabs">
+    <li><a href="/admin">Home</a></li>
+    <li><a href="/adminMails">Mails</a></li>
+    <li class="active"><a href="/adminProspects">Prospect</a></li>
+</ul>
+
+<div class="tab-content">
+<div id="home" class="tab-pane fade in active">
+<h3>PROSPECTS</h3>
+<div class="well">
+<p>Prospect administration page.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-sm-1"></div>
+</div>
+</body>
+<div class="row">
+<div class="col-sm-1"></div>
+<div class="col-sm-10 well">
+<div class="panel panel-success">
+<div class="panel-heading">
+<h3 class="panel-title">Succès !</h3>
+</div>
+<div class="panel-body">
+<p>Votre prospect a bien été ajouté à la base de données ITTENTION.</p>
+</div>
+</div>
+</div>
+</div>
+
+<a href="/admin"><button type="button" class="btn btn-md btn-info"><span class="glyphicon glyphicon-chevron-left"></span> Back to Administration page</button></a>
+
+block scripts
+    script(src='/vendor/jquery.min.js')
+    script(src='/vendor/jquery.form.js')
+    script(src='/vendor/bootstrap-modal.js')
+    script(src='/vendor/bootstrap-transition.js')
+    script(src='/javascripts/views/admin.js')
+    script(src='/javascripts/controllers/adminController.js')
+    script(src='/javascripts/form-validators/accountValidator.js')

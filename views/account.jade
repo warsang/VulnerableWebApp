@@ -1,0 +1,49 @@
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : { }
+// store the userId on the client side in a hidden input field //
+input(type='hidden', value= user._id)#userId
+
+if errors
+	div(class="alert alert-danger")!= '<strong>Warning!</strong> '+ errors
+
+
+#account-form-container
+	form( method="post")#account-form.form-horizontal.well.span6
+		fieldset
+			#name-cg.control-group
+				label.control-label(for='name-tf') Name
+				.controls
+					input#name-tf.input-xlarge(type='text', name='name', value= user.name,required)
+			#email-cg.control-group
+				label.control-label(for='email-tf') Email
+				.controls
+					input#email-tf.input-xlarge(type='email', name='email', value= user.email,required)
+			#institution-cg.control-group
+				label.control-label(for='institution-tf') Institution
+				.controls
+					input#institution-tf.input-xlarge(type='text', name='institution', value= user.institution,required)
+			#clist-cg.control-group
+				label.control-label(for='country-list') Location
+				.controls
+					select#country-list(name='country')
+						each item in countries
+							option(selected=item.name == user.country)= item.name
+			hr
+			p#sub2.subheading
+			#user-cg.control-group
+				label.control-label(for='user-tf') Username
+				.controls
+					input#user-tf.input-xlarge.disabled(type='text', name='user', value= user.user,required)
+			#pass-cg.control-group
+				label.control-label(for='pass-tf') Password
+				.controls
+					input#pass-tf.input-xlarge(type='password', name='pass', value='',required,onchange="form.confirmpass.pattern = this.value;")
+			#pass-cf.control-group
+				label.control-label(for='pass-tf') Confirm Password
+				.controls
+					input#pass-cf.input-xlarge(type='password', name='confirmpass', value='',required, title = 'Please enter the same Password as above' onchange="this.setCustomValidity(this.validity.patternMismatch ? this.title : '');")
+			.form-actions
+				button(type='submit')#account-form-btn2.btn
+
+// display form errors in a custom modal window //
+include modals/form-errors

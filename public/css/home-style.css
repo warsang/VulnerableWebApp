@@ -1,0 +1,37 @@
+#welcome
+{
+    border-color: black ;
+    border-width: 1px ;
+    border-style:solid ;
+    background-color: lightcyan;
+    padding:10px;
+}
+
+#account
+{
+    border-color: black ;
+    border-width: 1px ;
+    border-style:solid ;
+    background-color:#e4b9b9 ;
+    padding:10px;
+}
+
+#image
+{
+    border-color: black ;
+    border-width: 1px ;
+    border-style:solid ;
+    background-color:lightcyan ;
+    padding:10px;
+    margin-top:10px;
+}
+
+#eyeExpert
+{
+    border-color: black ;
+    border-width: 1px ;
+    border-style:solid ;
+    background-color: lightcyan;
+    padding:10px;
+    margin-top:10px;
+}

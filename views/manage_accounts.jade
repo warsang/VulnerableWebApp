@@ -1,0 +1,43 @@
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : { }
+// store the userId on the client side in a hidden input field //
+input(type='hidden', value= user._id)#userId
+
+div.row
+	div.col-sm-1
+	div.col-sm-10
+		div.panel.panel-danger
+			form( method="post")#account-form.form-horizontal.well.s1pan6
+				p.sub2.subheading The forfait types: 0 - Default; 1 - Intermediare
+				table.table.table-striped#manage-accounts
+					thead
+						tr
+							th Name
+							th Username
+							th Email
+							th Institution
+							th Country
+							th.forfait-title(colspan="2") Forfait
+					tbody
+						each item in users
+							tr
+								td= item.name
+								td= item.user
+								td= item.email
+								td= item.institution
+								td= item.country
+								td.forfait-date= item.forfait.start
+									= ' : '
+									= item.forfait.end
+								td
+									input.forfait-value.input-small(type='text', name='forfait.type', class='forfait.type', data-accountid= item._id, value= item.forfait.type)
+						tr
+							td(colspan="6")
+							td
+								button(type='submit'  class="btn btn-sm btn-info")<i class="glyphicon glyphicon-upload"></i>Update...
+				p.sub2.subheading The forfait types: 0 - Default; 1 - Intermediare
+				hr
+
+			// display form errors in a custom modal window //
+			include modals/form-errors
+	div.col-sm-1

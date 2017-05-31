@@ -1,0 +1,445 @@
+- user = typeof(udata) != 'undefined' ? udata : { }
+
+input(type='hidden', value= user._id)#userId
+
+html.
+
+	<head>
+	<title>MyPredattor</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="/vendor/bootstrap.min.css" rel="stylesheet">
+	<!-- Bootstrap theme -->
+	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="css/predattor.css" rel="stylesheet">
+	<link href="css/bootstrap-slider.css" rel="stylesheet">
+	<!-- Carousel CSS -->
+	<link rel="stylesheet" type="text/css" href="css/jcarousel.responsive.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	</head>
+
+	<body role="document">
+
+	<p></p><br>
+	<div class="jumbotron" id="jumbobg">
+	<h2 id="jumbotitle">></h2>
+	</div>
+	
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container-fluid">
+	<div id="navbar" class="navbar-collapse collapse">
+	<ul class="nav navbar-nav">
+		<li><a href="/superrare"><button type="button" class="btn btn-sm btn-info"><i class="icon-file icon-white"></i>Upload Data</button></a></li>
+		<li><a href="/result"><button type="button" class="btn btn-sm btn-warning active"><i class="icon-search icon-white"></i>Analyze Data</button></a></li>
+		<li><a href="/home"><button type="button" class="btn btn-sm btn-info"><i class="icon-user icon-white"></i>My Account</button></a></li>
+	</div>
+	</div>
+	</nav>
+
+
+	<div class="page_container" role="main">
+
+		<div class="row">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-10">
+			<div class="panel panel-danger">
+				<div class="panel-heading">
+				<h3 class="panel-title">Step 1: Browse and select your data!</h3>
+				</div>
+				<div class="panel-body">
+					<div class="well">
+						<p>Select an item in the carousel bellow and scroll down to visualize the attention heatmap !</p>
+					</div>
+					<div class="wrapper">
+						<div class="jcarousel-wrapper">
+							<div class="jcarousel">
+								<ul id="myDiv1">
+									<li></li>
+								</ul>
+							</div>
+
+						<a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+						<a href="#" class="jcarousel-control-next">&rsaquo;</a>
+
+						<p class="jcarousel-pagination"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-1"></div>
+		</div>
+	
+		<div class="row">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-3" style="position: static">
+			<div class="panel panel-danger">
+				<div class="panel-heading">
+					<h3 class="panel-title">Step 2: Analyse your data</h3>
+				</div>
+				<div class="panel-body">
+					<div class="well">
+						<p> Move the slider !</p>
+						<span id="ex6CurrentSliderValLabel">Attention Heatmap Transparency: <span id="ex6SliderVal">50</span> % </span><br>
+						<input id="ex6" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/>						
+					</div>
+					<div class="well">
+						<p>Select the regions of interest (ROIs) by clicking on top-left and bottom-right corner.</p> <p>Once you finished you can click on "Analyse ROIs !".<p>					
+					<form method="post" name="form1" id="analyse_rois">				
+						<input type="submit" value="Analyse ROIs !" class="btn btn-primary btn-lg btn-block">
+					</form>	
+
+					<form name="form">				
+						<div id="myDiv44"></div>
+						<input type="reset" onclick="reset_roi()" value="Reset ROIs ..." class="btn btn-warning btn-lg btn-block">
+					</form>
+					</div>	
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-7">
+			<div class="panel panel-success">
+				<div class="panel-heading">
+				<h3 class="panel-title" style="padding: 0 10px; display: inline;">Visualize your data</h3><span class="total_draw" style="display: inline; width: 10px; height: 10px;"></span>
+				</div>
+				<div class="panel-body">
+					<div id="centrage">
+						<div id="myDiv41"></div>
+						<div id="myDiv43"></div>
+						<div id="myDiv42"></div>
+						<div id="cucu"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-1"></div>
+		</div>		
+
+
+	</div>
+
+block scripts
+	script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+	script(src='/vendor/jquery.form.js')
+	script(src='/javascripts/bootstrap.min.js')
+	script(src='/javascripts/bootstrap-slider.js')
+	script(src='/vendor/bootstrap-transition.js')
+	script(src='/javascripts/jquery.jcarousel.min.js')
+	script(src='/javascripts/jcarousel.responsive.js')
+	script(src='/javascripts/ie10-viewport-bug-workaround.js')
+	script(src='/javascripts/controllers/homeController.js')
+	script(src='/javascripts/form-validators/accountValidator.js')
+	script(src='/javascripts/hist/jquery.js')
+	script(src='/javascripts/hist/jquery.flot.js')
+	script(src='/javascripts/hist/jquery.flot.stack.js')
+	script(type='text/javascript').
+
+
+		$(document).ready(function(){
+
+				$('#analyse_rois').submit(function(e){
+						e.preventDefault();
+
+						// write ROI (tab variable) in cookie
+						setCookie("ROI" ,tab, 365);
+						console.log("send_roi");
+
+						$('.total_draw').html('<img src="css/loader.gif">');
+						$.ajax({
+							url:'analyse_rois_ajax',
+							data: '',
+							success:function(result){
+								console.log('res'+result.data);
+								$('.total_draw').html("");
+
+								var ResImage_ = result.ResultImage;
+								var canvas = document.getElementById("canvas");
+								canvas.width = canvas.width;
+								var canvas2 = document.getElementById("canvas2");
+								canvas2.width = canvas2.width;
+								var canvas3 = document.getElementById("canvas3");
+								canvas3.width = canvas3.width;
+								
+								// canvas for the analysis image
+								document.getElementById('cucu').innerHTML = '<canvas id=\'canvas4\' width=\'800\' height=\'100\' style=\'position:absolute;margin-left:auto;z-index:1\'>';
+								var canvas4 = document.getElementById("canvas4");
+								canvas4.width = canvas4.width;
+								var ctx4 = canvas4.getContext("2d");
+								var img3 = new Image();
+								img3.src = ResImage_;
+								img3.onload = function(){
+									canvas4_hauteur = 800 * img3.height / img3.width;
+									canvas4.height = canvas4_hauteur;	
+									centrage.style.height = canvas4_hauteur + "px";		
+									ctx4.drawImage(img3, 0, 0, img3.width, img3.height, 0,0, 800, 800 * img3.height / img3.width);
+									console.log("ANALYSYS LOADED");
+								}
+							}
+						});  
+						return false;
+				});
+		});
+
+
+		var j=0;
+		// Ajout des ROIs dans une form cachee		
+		function addtext(text) {document.form.textarea.value = document.form.textarea.value+= text;
+		}
+
+		// variables
+		var tab = [];
+		var data_input="#{data_in}";
+		var crypt_input="#{crypt_in}";		
+		var ResImage="#{ResultImage}";
+		var trip = data_input.split(",");
+		var str1 = "/";
+		var str2 = ".jpg";
+		var str3 = "superrare";
+		var image2=[];
+		var str4 = "canvas";
+		var str5 = "context";
+		var img=[];
+		var img=new Image();
+		var laroute = [];
+		var temp = [];
+		var size = trip.length;
+		var isDrawing = false;
+		var startX;
+		var startY;
+		var slider = new Slider("#ex6");
+		var img = new Image();
+		
+
+		function setCookie(c_name, value, expiredays) {	 
+			var exdate=new Date();
+			exdate.setDate(exdate.getDate()+expiredays);
+			document.cookie=c_name+ "=" +escape(value)+
+			((expiredays==null) ? "" : ";expires="+exdate.toGMTString()); 
+		}
+		
+
+		
+
+		// fill the carousel
+		for( i= (size - 1) ; i >= 0 ; i--) {	
+			// get image path;
+			image2[i] = str1.concat(str3+str1+crypt_input+str1+trip[i]+str1+trip[i]+str2);						
+					
+			var str8 = "<li><img src='";
+			var str9 = " '/  onClick='reply_click(this.src)'></li>\n";
+
+			// form the lines to add to the carousel			
+			temp = str8.concat(image2[i] + str9);
+			laroute = laroute + temp;
+			//console.log("hey" + laroute);
+			
+			// inject thml into carousel
+			document.getElementById('myDiv1').innerHTML = laroute;
+		}
+	
+		
+		// canvas for the analysis image
+		document.getElementById('cucu').innerHTML = '<canvas id=\'canvas4\' width=\'800\' height=\'100\' style=\'position:absolute;margin-left:auto;z-index:1\'>';
+		var canvas4 = document.getElementById("canvas4");
+		canvas4.width = canvas4.width;
+		var ctx4 = canvas4.getContext("2d");
+		var img3 = new Image();
+		img3.src = ResImage;
+		img3.onload = function(){
+			canvas4_hauteur = 800 * img3.height / img3.width;
+			canvas4.height = canvas4_hauteur;	
+			centrage.style.height = canvas4_hauteur + "px";		
+			ctx4.drawImage(img3, 0, 0, img3.width, img3.height, 0,0, 800, 800 * img3.height / img3.width);
+			console.log("ANALYSYS LOADED");
+			}
+
+		// if an item is clicked, it needs to be shown with saliency map in tranparency
+		function reply_click(clicked_id) {	
+
+			var canvas4 = document.getElementById("canvas4");
+			canvas4.width = canvas4.width;
+
+				j=0;
+				tab= [];	
+						
+
+				// set up the 3 canvas (initial, saliency, ROIs)
+				//document.getElementById('myDiv41').innerHTML = '<canvas id=\'canvas\' width=\'600\' height=\'100\' style=\'position:absolute;margin-left:auto;z-index:8;opacity:1;filter:alpha(opacity=100)\'>';
+				document.getElementById('myDiv41').innerHTML = '<canvas id=\'canvas\' width=\'600\' height=\'100\' style=\'position:absolute;margin-left:auto;z-index:8\'>';
+				document.getElementById('myDiv43').innerHTML = '<canvas id=\'canvas3\' width=\'600\' height=\'100\' style=\'position:absolute;margin-left:auto;z-index:4\'>';
+				document.getElementById('myDiv42').innerHTML = '<canvas id=\'canvas2\' width=\'600\' height=\'100\' style=\'position:absolute;margin-left:auto;z-index:1\'>';
+				
+				// set up the hidden textarea to store ROI data 
+				document.getElementById('myDiv44').innerHTML = '<textarea id="regions" disabled="disabled" rows="4" name="textarea" style="display:none;"></textarea>';
+
+				// store image url in cookie (should be replaced by websockets, secured and able to change only a given div without page reload)				
+				var url = clicked_id;
+				setCookie("url" ,url , 365);
+				
+				//function reply(regions)
+				//	{
+				//		console.log("try" +region);
+				//	}	
+
+				ctx4.clearRect(0,0,canvas4.width,canvas4.height);
+
+				var canvas = document.getElementById("canvas");
+				var ctx = canvas.getContext("2d");
+
+				var canvas2 = document.getElementById("canvas2");
+				var ctx2 = canvas2.getContext("2d");
+
+				var canvas3 = document.getElementById("canvas3");
+				var ctx3 = canvas3.getContext("2d");
+				
+				// get the saliency image url
+				var name = clicked_id.split(".");				
+				var str9 = "saliency.jpg";
+				var size = name.length;
+				
+				switch ( size )
+					{
+					case 2:
+					var str8 = name[0].concat(str9);
+					break;
+					case 3:
+					var str8 = name[0].concat(name[1]+str9);
+					break;
+					case 4:
+					var str8 = name[0].concat(name[1]+name[2]+str9);
+					break;
+					case 5:
+					var str8 = name[0].concat("."+name[1]+"."+name[2]+"."+name[3]+str9);
+					break;	
+					case 6:
+					var str8 = name[0].concat("."+name[1]+"."+name[2]+"."+name[3]+"."+name[4]+str9);
+					break;
+					case 7:
+					var str8 = name[0].concat("."+name[1]+"."+name[2]+"."+name[3]+"."+name[4]+"."+name[5]+str9);
+					break;					
+					}
+			
+				// declare the three images (ResImage only exists if analysis)					
+				//var img = new Image();
+				img.src = clicked_id;
+				//img.src = str8;
+				var www = 0;
+				var img2 = new Image();
+				img2.src = str8;
+				//img2.src = clicked_id;
+				var img3 = new Image();
+				img3.src = ResImage;
+				
+						// load image1				
+						img.onload = function(){
+
+						www = 600 * img.height / img.width;
+						canvas2.height = www;
+						canvas.height = www;
+						canvas3.height = www;
+						centrage.style.height = www+"px";
+						ctx.globalAlpha=0.5;
+						ctx.drawImage(img, 0, 0, img.width, img.height, 0,0, 600, www);
+						//ctx.globalAlpha=0.5;
+						}
+				
+
+						// load image2
+						img2.onload = function(){
+						//ctx2.globalAlpha=0.5;
+						ctx2.drawImage(img2, 0, 0, img2.width, img2.height, 0,0, 600, 600 * img2.height / img2.width);						
+						}
+
+
+
+			// draw the ROI
+			function handleMouseDown(e) {
+				var offset = canvas.getBoundingClientRect();
+				mouseX = parseInt(e.clientX - offset.left);
+				mouseY = parseInt(e.clientY - offset.top);
+			
+			//$("#downlog").html("Down: " + mouseX + " / " + mouseY);
+
+			// Put the mousedown stuff here
+			if (isDrawing) {
+			isDrawing = false;
+			ctx3.beginPath();
+				ctx3.fillStyle = 'white';
+				ctx3.globalAlpha = 0.5;
+			ctx3.fillRect(startX, startY, mouseX - startX, mouseY - startY);
+				ctx3.globalAlpha = 1;
+				ctx3.lineWidth = 2;
+			ctx3.strokeStyle = 'red';
+			ctx3.stroke();
+				ctx3.strokeRect(startX, startY, mouseX - startX, mouseY - startY);
+				addtext(startX + ";" + startY + ";" + (mouseX - startX) + ";" + (mouseY - startY) + "\n");
+								
+				tab[j] =  (startX + ";" + startY + ";" + (mouseX - startX) + ";" + (mouseY - startY));
+				j = j + 1;
+				ctx3.font="20px bold Georgia";
+				ctx3.fillStyle = 'red';
+				var roi = "ROI" +j;
+				ctx3.fillText(roi, startX, startY + 15);
+				ctx3.fillText("BACKGROUND", 10, 15);
+				ctx3.strokeRect(0, 0, 600, www);
+				ctx3.lineWidth = 2;
+				ctx3.stroke();
+				canvas.style.cursor = "default";
+			} else {
+				isDrawing = true;
+				startX = mouseX;
+				startY = mouseY;
+				canvas.style.cursor = "crosshair";
+				}
+
+		}
+		
+		// call the drawing if click on canvas (the visible one)
+		$("#canvas").mousedown(function (e) {
+			handleMouseDown(e);
+		});
+		
+			
+		}
+
+
+		
+
+		// delete canvas3 (the one displaying the ROIs) and empty the tab variable (list of ROIs)
+		function reset_roi() {
+			canvas3.width = canvas3.width;	
+			tab = [];
+			j = 0;	
+		}
+
+		// write ROI (tab variable) in cookie
+		function send_roi()
+			{
+				setCookie("ROI" ,tab, 365);
+				console.log("send_roi");
+			}
+
+		slider.on("slide", function(slideEvt) {
+			$("#ex6SliderVal").text(slideEvt.value);
+			changeAlpha(slideEvt.value);
+			});
+
+
+
+		// transparence function
+		function changeAlpha(newValue){
+			var canvas = document.getElementById('canvas');
+			var context = canvas.getContext('2d');
+			context.clearRect(0, 0, canvas.width, canvas.height);
+			context.drawImage(img, 0, 0, img.width, img.height, 0,0, 600, 600 * img.height / img.width);
+			context.globalAlpha=(newValue/100);
+		}
+

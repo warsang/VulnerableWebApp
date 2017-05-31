@@ -1,0 +1,36 @@
+
+extends layout
+
+block content
+	#login-container
+		form( method="post")#login-form.well.span4
+			h1 ITTENTION
+			p.subheading Please login to your account
+			label Username 
+			input(type="text", name="user", id='user-tf').span4.required
+			label Password
+			input(type="password", name="pass", id='pass-tf').span4.required
+			button(type="submit")#btn-login.btn.btn-primary
+				i.icon-lock.icon-white
+				| Sign in
+			label#remember-me.checkbox Remember Me
+				input(type="checkbox", checked='checked')
+			div.clear-fix
+			hr
+			div.btm-links
+				a(href='/lost-password' data-target="#someAwesomeId"  data-toggle="modal")#forgot-password Forgot your password?
+				a(href='/signup')#create-account Create an account
+				a(href='/contacthorsco')#contactus Contact us!
+
+	include modals/alert
+	include modals/lost-password
+
+block scripts
+	script(src='/vendor/jquery.min.js')
+	script(src='/vendor/jquery.form.js')
+	script(src='/vendor/bootstrap-modal.js')
+	script(src='/vendor/bootstrap-transition.js')
+	script(src='/javascripts/views/login.js')
+	script(src='/javascripts/controllers/loginController.js')
+	script(src='/javascripts/form-validators/loginValidator.js')
+	script(src='/javascripts/form-validators/emailValidator.js')

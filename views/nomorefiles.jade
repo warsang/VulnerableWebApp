@@ -1,0 +1,56 @@
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : { }
+- maxfilesnr_message = typeof(messageAlert) != 'undefined' ? messageAlert : { }
+
+input(type='hidden', value= user._id)#userId
+html.
+	<head>
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/vendor/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Bootstrap theme -->
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="/css/predattor.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+
+	<!--Style sheet for home blocks -->
+	<link href="/css/home-style.css" rel="stylesheet">
+
+	<!--Character set for é-->
+	<meta charset="utf-8" />
+	</head>
+
+	<body role="document">
+	<nav class="navbar navbar-inverse navbar-default">
+		<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/home"><font size="5">ITTENTION</font></a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li> <a href="/home"><button type="button" class="btn btn-md btn-info"><span class="glyphicon glyphicon-home"></span> Home</button></a></li>
+				<li> <a href="/app"><button type="button" class="btn btn-md btn-info"><span class="glyphicon glyphicon-film"></span> My Ittention Application</button></a></li>
+				<li> <a href="/account"><button type="button" class="btn btn-md btn-info"><span class="glyphicon glyphicon-user"></span> My Account/Sign Out</button></a></li>
+			</ul>
+		</div>
+		</div>
+	</nav>
+
+	<div class="row">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-10">
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+			<h3 class="panel-title">Upload error!</h3>
+			</div>
+			<div class="panel-body">
+				<div class="well">
+					<p>#{maxfilesnr_message}</p> 
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-1"></div>
+	</div>
+	</body>

@@ -1,0 +1,60 @@
+doctype html
+html
+    include ./includes/head.jade
+    body(role=document)
+        nav.navbar.navbar-inverse.navbar-default
+            div.container-fluid
+                div.navbar-header
+                    a(class='navbar-brand', href='/home') ITTENTION
+                div#navbar.navbar-collapse.collapse
+                    ul(class='nav navbar-nav')
+                        li
+                            a(href='/home')
+                                button(type='button', class='btn btn-md btn-info')
+                                    span(class='glyphicon glyphicon-home')
+                                    Home
+                        li
+                            a(href='/app')
+                                button(type='button', class='btn btn-md btn-info')
+                                    span(class='glyphicon glyphicon-film')
+                                    My Ittention Application
+                        li
+                            a(href='/account')
+                                button(type='button', class='btn btn-md btn-info')
+                                    span(class='glyphicon glyphicon-user')
+                                    My Account/Sign Out
+        div.row
+            div.col-sm-1
+            div.col-sm-10
+                div.panel.panel-danger
+                    div.panel-heading
+                        h3(class='panel-title') Welcome to Admin!
+                    div.panel-body
+                        ul(class='nav nav-tabs')
+                            li(class='active')
+                                a(href='/admin') Home
+                            li
+                                a(href='/adminMails') Mails
+                            li
+                                a(href='/adminProspects') Prospect
+                div.tab-content
+                    div#home.tab-pane.fade.in.active
+                        h3 HOME
+                    div.well.admin-description
+                        p Home administration page.
+                        div.admin-warning
+            div.col-sm-1    
+
+        block content
+            include manage_accounts
+            include modals/alert
+            include modals/confirm
+
+        block scripts
+            script(src='/vendor/jquery.form.js')
+            script(src='/vendor/bootstrap-modal.js')
+            script(src='/vendor/bootstrap-transition.js')
+            script(src='/jquery/jquery.min.js')
+            script(src='/javascripts/views/admin.js')
+            script(src='/javascripts/controllers/adminController.js')
+

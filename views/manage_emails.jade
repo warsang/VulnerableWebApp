@@ -1,0 +1,69 @@
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : { }
+// store the userId on the client side in a hidden input field //
+input(type='hidden', value= user._id)#userId
+
+div.row
+	div.col-sm-1
+	div.col-sm-10
+		div.panel.panel-danger
+			form( method="post")#account-form.form-horizontal.well.s1pan6
+				p.sub2.subheading  Blue - Not answered ; Orange - Answered
+				table.table.table-striped#manage-emails
+					thead
+						tr
+							th Client
+							th Username
+							th Email
+							th Email from
+							th Subject
+							th Date
+							th Content
+					tbody
+						- var counter = 0;
+							each item in mails
+								-counter=counter+1;
+								tr
+									td(style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;") ...
+									td= udata.name
+									td World
+									td= item.from
+									td= item.subject
+									td= item.date
+									td(style=" max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;")= item.text
+									td
+										if item.read == 0
+											button(type="button" class="btn btn-info btn-lg show" data-toggle="modal" data-target="#myModal"+counter) Read Mail
+										else if item.read == 1
+											button(type="button" class="btn btn-warning btn-lg show" data-toggle="modal" data-target="#myModal"+counter) Read Mail
+										form(name="deleteMail"+counter action="/deleteMail?m="+item._id method="post")
+											button(type="submit" value="submit" class="btn btn-danger btn-lg show glyphicon glyphicon-trash") Delete
+										div(class="modal fade" id="myModal"+counter role="dialog")
+													<!-- Modal content-->
+													<div class="modal-content">
+													div(class="modal-header")
+														button(type="button" class="close" data-dismiss="modal")&times;
+														h4(class="modal-title")= item.subject
+													div(class="modal-body")
+														p(style="word-break: break-all;")= item.text
+													div(class="modal-footer")
+														form(name="answer"+counter action="/adminMails" method="post")
+															input(type="hidden" name="counter" value=counter)
+															input(type="hidden" name="email" value=item.from)
+															input(type="hidden" name="emailId" value= item._id)
+															button(type="submit" value="submit" style="float:left;" class="btn btn-info btn-sm show") Answer
+														button(type="button" class="btn btn-default close" data-dismiss="modal") Close
+													</div>	
+									
+									
+
+						tr
+							td(colspan="6")
+							
+				p.sub2.subheading Blue - Not answered ; Orange - Answered
+				hr
+
+			// display form errors in a custom modal window //
+			include modals/form-errors
+	div.col-sm-1
+		

@@ -1,0 +1,16 @@
+#prospectWell
+{
+  max-width: 1200px;
+  max-height: 1200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+td
+{
+   max-width: 100px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+ }
